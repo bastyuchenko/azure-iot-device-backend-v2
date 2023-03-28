@@ -24,7 +24,7 @@ namespace TestIssueForGit
                 security.GetRegistrationId());
 
             var deviceClient = new IotHubDeviceClient(result.AssignedHub, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
-
+            await deviceClient.OpenAsync();
             await deviceClient.SetIncomingMessageCallbackAsync(
                 async (IncomingMessage messageC2D) =>
                 {
@@ -42,8 +42,9 @@ namespace TestIssueForGit
                         throw;
                     }
                 }, CancellationToken.None);
-
+            
             await Task.Delay(-1);
+            await deviceClient.CloseAsync();
         }
 
         private static Task<MessageAcknowledgement> dsdcsdcsdcscd(IncomingMessage arg)

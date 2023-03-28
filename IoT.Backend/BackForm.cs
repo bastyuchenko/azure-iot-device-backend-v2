@@ -31,7 +31,7 @@ namespace IoT.Backend
                 //                SdkAssignsMessageId = SdkAssignsMessageId.WhenUnset
             };
 
-            _serviceClient = new IotHubServiceClient(_parameters.IoTHubConnectionString, options);
+            _serviceClient = (new IotHubServiceClient(_parameters.IoTHubConnectionString, options));
 
             InitializeComponent();
         }
@@ -92,6 +92,7 @@ namespace IoT.Backend
 
         private async void btnSendToDevice_Click(object sender, EventArgs e)
         {
+            _serviceClient = new IotHubServiceClient(_parameters.IoTHubConnectionString);
             var sendTask = SendC2dMessagesAsync(CancellationToken.None);
             var receiveTask = ReceiveMessageFeedbacksAsync(CancellationToken.None);
 
@@ -134,6 +135,7 @@ namespace IoT.Backend
 
             try
             {
+                await _serviceClient.Messages.OpenAsync();
                 await _serviceClient.Messages.SendAsync(tbDeviceId.Text, message, CancellationToken.None);
                 Log($"Sent message with Id {message.MessageId} to {tbDeviceId.Text}.");
             }
@@ -183,7 +185,6 @@ namespace IoT.Backend
         private void BackForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            tbMessageId.Text = Guid.NewGuid().ToString("D");
             tbCorrelationId.Text = Guid.NewGuid().ToString("D");
         }
 
