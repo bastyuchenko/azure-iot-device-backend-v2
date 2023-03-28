@@ -66,7 +66,7 @@ namespace IoT.Device
             tbAssignedHub.Text = provisioningDetails?.IotHubHostName;
 
             Log($"Registration status: {result.Status}.");
-            if (result.Status != ProvisioningRegistrationStatusType.Assigned)
+            if (result.Status != ProvisioningRegistrationStatus.Assigned)
                 throw new Exception("Registration status did not assign a hub, so exiting this sample.");
 
             Log($"[DONE] Device {security.GetRegistrationId()} registered to {result.AssignedHub}.");

@@ -17,11 +17,9 @@ namespace IoT.Backend
 {
     public partial class BackForm : Form
     {
-        private static ServiceClient _serviceClient;
+        private static IotHubServiceClient _serviceClient;
 
         private Parameters _parameters;
-
-        private RegistryManager registryManager;
 
         private EventProcessorClient processor;
 
@@ -29,13 +27,14 @@ namespace IoT.Backend
         {
             _parameters = new Parameters();
 
-            var options = new ServiceClientOptions
+            var options = new IotHubServiceClientOptions()
             {
-                SdkAssignsMessageId = SdkAssignsMessageId.WhenUnset
+
+                //                SdkAssignsMessageId = SdkAssignsMessageId.WhenUnset
+
             };
 
-            _serviceClient = ServiceClient.CreateFromConnectionString(_parameters.IoTHubConnectionString, _parameters.TransportType, options);
-            registryManager = RegistryManager.CreateFromConnectionString(_parameters.IoTHubConnectionString);
+            _serviceClient = new IotHubServiceClient(_parameters.IoTHubConnectionString, options);
 
             InitializeComponent();
         }
@@ -107,31 +106,18 @@ namespace IoT.Backend
             // It is important to note that receiver only gets feedback messages when the device is actively running and acting on messages.
             Log("Starting to listen to feedback messages");
 
-            var feedbackReceiver = _serviceClient.GetFeedbackReceiver();
-
-            while (!token.IsCancellationRequested)
-                try
-                {
-                    var feedbackMessages = await feedbackReceiver.ReceiveAsync(token);
-                    if (feedbackMessages != null)
+            _serviceClient.MessageFeedback.MessageFeedbackProcessor =
+            (FeedbackBatch batch) =>
+            {
+                Log("New Feedback received:");
+                Log(JsonConvert.SerializeObject(
+                    new
                     {
-                        Log("New Feedback received:");
-                        Log(JsonConvert.SerializeObject(
-                            new
-                            {
-                                feedbackMessages.EnqueuedTime,
-                                feedbackMessages.Records
-                            }, Formatting.Indented));
-
-                        await feedbackReceiver.CompleteAsync(feedbackMessages, token);
-                    }
-
-                    await Task.Delay(TimeSpan.FromSeconds(5));
-                }
-                catch (Exception e)
-                {
-                    Log($"Transient Exception occurred; will retry: {e}");
-                }
+                        batch.EnqueuedOnUtc,
+                        batch.Records
+                    }, Formatting.Indented));
+                return AcknowledgementType.Complete;
+            };
         }
 
         private async Task SendC2dMessagesAsync(CancellationToken cancellationToken)
@@ -149,9 +135,8 @@ namespace IoT.Backend
 
             try
             {
-                await _serviceClient.SendAsync(tbDeviceId.Text, message, TimeSpan.FromSeconds(30));
+                await _serviceClient.Messages.SendAsync(tbDeviceId.Text, message, CancellationToken.None);
                 Log($"Sent message with Id {message.MessageId} to {tbDeviceId.Text}.");
-                message.Dispose();
             }
             catch (Exception e)
             {
@@ -166,13 +151,11 @@ namespace IoT.Backend
             public string EventHubConnectionString = ConfigurationSettings.AppSettings["EventHubConnectionString"];
             public string IoTHubConnectionString = ConfigurationSettings.AppSettings["IoTHubConnectionString"];
             public string BlobStorageConnectionString = ConfigurationSettings.AppSettings["BlobStorageConnectionString"];
-
-            public TransportType TransportType = TransportType.Amqp;
         }
 
         private async void btnWDesired_Click(object sender, EventArgs e)
         {
-            var twin = await registryManager.GetTwinAsync(_parameters.DeviceId);
+            var twin = await _serviceClient.Twins.GetAsync(_parameters.DeviceId);
 
             var patch =
                 $@"{{
@@ -183,13 +166,13 @@ namespace IoT.Backend
                     }}
                 }}";
 
-            await registryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
+            await _serviceClient.Twins.UpdateAsync(twin.DeviceId, twin, false);
         }
 
         private async void btnRReported_Click(object sender, EventArgs e)
         {
-            var twin = await registryManager.GetTwinAsync(_parameters.DeviceId);
-            tbDTRead.Text = twin.ToJson(Formatting.Indented);
+            var twin = await _serviceClient.Twins.GetAsync(_parameters.DeviceId);
+            tbDTRead.Text = twin.ToString();//.ToJson(Formatting.Indented);
             Log("Device Twin content was read");
         }
 
@@ -212,18 +195,18 @@ namespace IoT.Backend
 
         private async void btnSendRequest_DirectMethod_Click(object sender, EventArgs e)
         {
-            var methodInvocation = new CloudToDeviceMethod(tbDirectMethodName.Text)
+            var methodInvocation = new DirectMethodServiceRequest(tbDirectMethodName.Text)
             {
                 ResponseTimeout = TimeSpan.FromSeconds(30),
             };
-            methodInvocation.SetPayloadJson(tbDirectMethodPayload.Text);
+            methodInvocation.Payload = tbDirectMethodPayload.Text;
 
             MessageBox.Show($"Invoking direct method for device: {tbDeviceId.Text}");
 
             // Invoke the direct method asynchronously and get the response from the simulated device.
-            CloudToDeviceMethodResult response = await _serviceClient.InvokeDeviceMethodAsync(tbDeviceId.Text, methodInvocation);
+            DirectMethodClientResponse response = await _serviceClient.DirectMethods.InvokeAsync(tbDeviceId.Text, methodInvocation);
 
-            MessageBox.Show($"Response status: {response.Status}, payload:\n\t{response.GetPayloadAsJson()}");
+            MessageBox.Show($"Response status: {response.Status}, payload:\n\t{response.PayloadAsString}");
         }
     }
 }
