@@ -1,5 +1,4 @@
-﻿using Microsoft.Azure.Devices.Client;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace IoT.Device
 {

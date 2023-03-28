@@ -1,19 +1,13 @@
-﻿using Microsoft.Azure.Devices;
-using Microsoft.Azure.Devices.Client;
+﻿using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Provisioning.Client;
-using Microsoft.Azure.Devices.Provisioning.Client.Transport;
 using Microsoft.Azure.Devices.Shared;
 using Newtonsoft.Json;
 using System;
-using System.Drawing;
-using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using TextBox = System.Windows.Forms.TextBox;
 
 namespace IoT.Device
 {
@@ -118,7 +112,6 @@ namespace IoT.Device
                             message.To,
                             message.CorrelationId
                         }, Formatting.Indented));
-
 
                     return MessageAcknowledgement.Complete;
                 }).ConfigureAwait(false);

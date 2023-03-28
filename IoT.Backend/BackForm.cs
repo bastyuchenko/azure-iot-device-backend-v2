@@ -3,7 +3,6 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.Devices;
-using Microsoft.Azure.Devices.Shared;
 using Newtonsoft.Json;
 using System;
 using System.Configuration;
@@ -29,9 +28,7 @@ namespace IoT.Backend
 
             var options = new IotHubServiceClientOptions()
             {
-
                 //                SdkAssignsMessageId = SdkAssignsMessageId.WhenUnset
-
             };
 
             _serviceClient = new IotHubServiceClient(_parameters.IoTHubConnectionString, options);
@@ -122,9 +119,11 @@ namespace IoT.Backend
 
         private async Task SendC2dMessagesAsync(CancellationToken cancellationToken)
         {
+            var messageId = Guid.NewGuid().ToString("D");
+            tbMessageId.Text = messageId;
             var message = new Message(Encoding.ASCII.GetBytes(tbSentMsg.Text))
             {
-                MessageId = tbMessageId.Text,
+                MessageId = messageId,
                 CorrelationId = tbCorrelationId.Text,
                 // An acknowledgment is sent on delivery success or failure.
                 Ack = DeliveryAcknowledgement.Full
