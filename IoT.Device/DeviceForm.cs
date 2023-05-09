@@ -16,7 +16,7 @@ namespace IoT.Device
         private readonly X509Certificate2 x509Certificate;
         private IotHubDeviceClient deviceClient;
         private CancellationTokenSource streamGenerationToken;
-        private static IotHubModuleClient moduleClient;
+        private IotHubModuleClient moduleClient;
         private AuthenticationProviderX509 security;
         private ProvisioningDetailsFileStorage provisioningDetailCache;
         private ProvisioningResponse provisioningDetails;
@@ -60,26 +60,29 @@ namespace IoT.Device
 
             Log($"Registration status: {result.Status}.");
             if (result.Status != ProvisioningRegistrationStatus.Assigned)
-                throw new Exception("Registration status did not assign a hub, so exiting this sample.");
+                throw new Exception("Registration status did not assign a hub. Registration status '{result.Status}' received.");
 
             Log($"[DONE] Device {security.GetRegistrationId()} registered to {result.AssignedHub}.");
         }
 
-        private void btnCreateClient_Click(object sender, EventArgs e)
+        private async void btnCreateClient_Click(object sender, EventArgs e)
         {
+            if (deviceClient is not null)
+            {
+                await deviceClient.DisposeAsync();
+            }
+
             if (string.IsNullOrWhiteSpace(tbAssignedHub.Text)) { MessageBox.Show("Please register device before start."); return; }
             Log("Creating X509 authentication for IoT Hub...");
-            var security = new AuthenticationProviderX509(x509Certificate);
             IAuthenticationMethod auth = new ClientAuthenticationWithX509Certificate(x509Certificate, security.GetRegistrationId());
 
             deviceClient = new IotHubDeviceClient(provisioningDetails.IotHubHostName, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
+            deviceClient.ConnectionStatusChangeCallback = (ConnectionStatusInfo info) =>
+            {
+                Log($"Device Status {info.Status}; Change reason: {info.ChangeReason}; Recommended action {info.RecommendedAction}.");
+            };
+            await deviceClient!.OpenAsync(CancellationToken.None);
             Log($"[DONE] Created DeviceClient instance to communicate through assigned IoT Hub...");
-
-            moduleClient = new IotHubModuleClient(_parameters.ModuleConnectionString, new IotHubClientOptions(new IotHubClientMqttSettings()));
-            moduleClient.ConnectionStatusChangeCallback = (ConnectionStatusInfo info) =>
-                {
-                    MessageBox.Show($"Status {info.Status} changed: {info.ChangeReason}");
-                };
         }
 
         private async void btnSendMsg_Click(object sender, EventArgs e)
@@ -92,7 +95,7 @@ namespace IoT.Device
             Log("Finished.");
         }
 
-        private async void btnStartReceiving_Click(object sender, EventArgs e)
+        private async void btnStartTelemetryMessageReceiving_Click(object sender, EventArgs e)
         {
             if (deviceClient == null) { Log("Assigned IoT Hub name was not stored. Please register one more time to get IoT Hub name."); return; }
 
@@ -272,6 +275,25 @@ namespace IoT.Device
                     }
                 },
                 CancellationToken.None);
+        }
+
+        private async void btnModuleClient_Click(object sender, EventArgs e)
+        {
+            var options = new IotHubClientOptions(new IotHubClientMqttSettings());
+
+            moduleClient = new IotHubModuleClient(_parameters.ModuleConnectionString, options);
+            moduleClient.ConnectionStatusChangeCallback = (ConnectionStatusInfo info) =>
+            {
+                Log($"Module Status {info.Status}; Change reason: {info.ChangeReason}; Recommended action {info.RecommendedAction}.");
+            };
+
+            Log($"[DONE] Created ModuleClient instance to communicate through assigned IoT Hub...");
+
+        }
+
+        private async void btnStopTelemetryMessageReceiving_Click(object sender, EventArgs e)
+        {
+            await deviceClient.SetIncomingMessageCallbackAsync(null).ConfigureAwait(false);
         }
     }
 }
