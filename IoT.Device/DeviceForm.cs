@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Provisioning.Client;
-using Microsoft.Azure.Devices.Shared;
 using Newtonsoft.Json;
 using System;
 using System.Security.Cryptography.X509Certificates;
@@ -70,8 +69,8 @@ namespace IoT.Device
         {
             if (string.IsNullOrWhiteSpace(tbAssignedHub.Text)) { MessageBox.Show("Please register device before start."); return; }
             Log("Creating X509 authentication for IoT Hub...");
-            var security = new SecurityProviderX509Certificate(x509Certificate);
-            IAuthenticationMethod auth = new ClientAuthenticationWithX509Certificate(x509Certificate, security.GetRegistrationID());
+            var security = new AuthenticationProviderX509(x509Certificate);
+            IAuthenticationMethod auth = new ClientAuthenticationWithX509Certificate(x509Certificate, security.GetRegistrationId());
 
             deviceClient = new IotHubDeviceClient(provisioningDetails.IotHubHostName, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
             Log($"[DONE] Created DeviceClient instance to communicate through assigned IoT Hub...");
@@ -246,7 +245,7 @@ namespace IoT.Device
             await deviceClient.SetDirectMethodCallbackAsync(
             async (DirectMethodRequest methodRequest) =>
                 {
-                    string data = methodRequest.GetPayloadAsJsonString();
+                    methodRequest.TryGetPayload(out string data);
 
                     // Check the payload is a single integer value.
                     if (int.TryParse(data, out int telemetryIntervalInSeconds))

@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.8.1" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.8.1" />
-    <PackageReference Include="Microsoft.Azure.Devices" Version="2.0.0-preview004" />
-    <PackageReference Include="Microsoft.Azure.Devices.Client" Version="2.0.0-preview004" />
-    <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Client" Version="2.0.0-preview004" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.9.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.9.0" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="2.0.0-preview005" />
+    <PackageReference Include="Microsoft.Azure.Devices.Client" Version="2.0.0-preview005" />
+    <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Client" Version="2.0.0-preview005" />
     <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.17.0-preview-001" />
     <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.16.0-preview-001" />
     <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.18.0-preview-001" />

@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Message = Microsoft.Azure.Devices.Message;
 
 namespace IoT.Backend
 {
@@ -114,7 +113,7 @@ namespace IoT.Backend
                         batch.EnqueuedOnUtc,
                         batch.Records
                     }, Formatting.Indented));
-                return AcknowledgementType.Complete;
+                return Task.FromResult(AcknowledgementType.Complete);
             };
         }
 
@@ -122,7 +121,7 @@ namespace IoT.Backend
         {
             var messageId = Guid.NewGuid().ToString("D");
             tbMessageId.Text = messageId;
-            var message = new Message(Encoding.ASCII.GetBytes(tbSentMsg.Text))
+            var message = new OutgoingMessage(Encoding.ASCII.GetBytes(tbSentMsg.Text))
             {
                 MessageId = messageId,
                 CorrelationId = tbCorrelationId.Text,
