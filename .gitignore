@@ -17,3 +17,5 @@
 */obj/*
 .idea/
 *.csproj.user
+/IoT.Backend.Wpf/App.config
+/IoT.Backend.Wpf/iothubx509device1
