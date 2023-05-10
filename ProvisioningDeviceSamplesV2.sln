@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Backend", "IoT.Backend\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Device", "IoT.Device\IoT.Device.csproj", "{3333E471-E6AC-4932-8567-90673B4CFCC3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Device.Wpf", "IoT.Backend.Wpf\IoT.Device.Wpf.csproj", "{9F7A534D-C2D5-42A8-B3B8-B0FDE91B0DAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Device.Wpf", "IoT.Device.Wpf\IoT.Device.Wpf.csproj", "{9F7A534D-C2D5-42A8-B3B8-B0FDE91B0DAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
