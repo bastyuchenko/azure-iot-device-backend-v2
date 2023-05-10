@@ -363,6 +363,7 @@
             tbDirectMethodName.Size = new System.Drawing.Size(370, 23);
             tbDirectMethodName.TabIndex = 1;
             tbDirectMethodName.Text = "SetTelemetryInterval";
+            tbDirectMethodName.TextChanged += tbDirectMethodName_TextChanged;
             // 
             // btnSendRequest_DirectMethod
             // 

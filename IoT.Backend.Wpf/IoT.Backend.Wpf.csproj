@@ -4,12 +4,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.9.0" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.9.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.9.1" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.9.1" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="2.0.0-preview005" />
   </ItemGroup>
 

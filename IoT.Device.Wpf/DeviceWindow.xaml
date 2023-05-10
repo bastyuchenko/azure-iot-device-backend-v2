@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IoT.Device.Wpf"
         mc:Ignorable="d"
-        Title="DeviceWindow" Height="450" Width="800">
+        Title="DeviceWindow" Height="450" Width="800" Background="#FF82A9E8">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32*"/>
@@ -18,9 +18,15 @@
                 <ColumnDefinition Width="25*"/>
                 <ColumnDefinition Width="71*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnProvison" Content="Provision" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="20" Click="btnProvison_Click" />
-            <Button x:Name="btnCreateClient" Content="Create device client" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Width="120" Height="20" Click="btnCreateClient_Click"/>
-            <Button x:Name="btnModuleClient" Content="Create module client" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" Width="120" Height="20"/>
+            <Button x:Name="btnProvison" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="20" Click="btnProvison_Click" >
+                <TextBlock Text="Provision" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button x:Name="btnCreateClient" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Width="120" Height="20" Click="btnCreateClient_Click">
+                <TextBlock Text="Create device client" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button x:Name="btnModuleClient" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" Width="120" Height="20">
+                <TextBlock Text="Create module client" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
             <Label Content="There is no reason to know &#xD;&#xA;SerialNumber, the SerialNumber &#xD;&#xA;is stored in certificate." HorizontalAlignment="Left" Margin="122,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="2" Width="198"/>
             <Label Grid.Column="2" Content="Assigned IoT Hub" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </Grid>
@@ -30,7 +36,7 @@
                 <ColumnDefinition Width="19*"/>
                 <ColumnDefinition Width="21*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="lbStatus" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="370" Width="380"/>
+            <TextBlock x:Name="lbStatus" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="350" Width="360" Background="White"/>
             <Grid Grid.Column="1">
                 <TabControl>
                     <TabItem Header="Send to/Receive from IoT Hub">
@@ -43,11 +49,17 @@
                                 <RowDefinition Height="10*"/>
                                 <RowDefinition Height="9*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="tbMsg" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="171" Width="327"/>
-                            <TextBlock x:Name="tbReceivedMsg" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="162" Width="327" Grid.Row="1"/>
-                            <Button x:Name="btnSendMsg" Grid.Column="1" Content="Send msg to IoT" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="65" Width="65" Click="btnSendMsg_Click"/>
-                            <Button x:Name="btnStartTelemetryMessageReceiving" Grid.Column="1" Content="Start telemetry message listeningButton" HorizontalAlignment="Left" Margin="11,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Click="btnStartTelemetryMessageReceiving_Click"/>
-                            <Button x:Name="btnStopTelemetryMessageReceiving" Grid.Column="1" Content="Stop telemetry message listening" HorizontalAlignment="Left" Margin="25,81,0,0" Grid.Row="1" VerticalAlignment="Top" Height="59" Click="btnStopTelemetryMessageReceiving_Click"/>
+                            <TextBlock x:Name="tbMsg" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="149" Width="307" Background="White"/>
+                            <TextBlock x:Name="tbReceivedMsg" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="133" Width="307" Grid.Row="1" Background="White"/>
+                            <Button x:Name="btnSendMsg" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="65" Width="65" Click="btnSendMsg_Click">
+                                <TextBlock Text="Send msg to IoT" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
+                            <Button x:Name="btnStartTelemetryMessageReceiving" Grid.Column="1" HorizontalAlignment="Left" Margin="11,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Click="btnStartTelemetryMessageReceiving_Click">
+                                <TextBlock Text="Start telemetry message listeningButton" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
+                            <Button x:Name="btnStopTelemetryMessageReceiving" Grid.Column="1"  HorizontalAlignment="Left" Margin="11,70,0,0" Grid.Row="1" VerticalAlignment="Top" Height="70" Click="btnStopTelemetryMessageReceiving_Click" Width="71">
+                                <TextBlock Text="Stop telemetry message listening" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
                         </Grid>
                     </TabItem>
                     <TabItem Header="DeviceTwin">
@@ -60,11 +72,17 @@
                                 <RowDefinition Height="10*"/>
                                 <RowDefinition Height="9*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="tbDTReport" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="171" Width="327"/>
-                            <TextBlock x:Name="tbDTRead" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="162" Width="327" Grid.Row="1"/>
-                            <Button x:Name="btnWReported" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="65" Width="65" Click="btnSendMsg_Click" Content="write Reported"/>
-                            <Button x:Name="btnReadDT" Grid.Column="1" Content="read Device Twin" HorizontalAlignment="Left" Margin="11,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Click="btnReadDT_Click"/>
-                            <Button x:Name="btnDTReadDesired" Grid.Column="1" Content="subscribe on Device Twin Desired Properties" HorizontalAlignment="Left" Margin="25,81,0,0" Grid.Row="1" VerticalAlignment="Top" Height="59" Click="btnDTReadDesired_Click"/>
+                            <TextBlock x:Name="tbDTReport" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="150" Width="307" Background="White"/>
+                            <TextBlock x:Name="tbDTRead" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="133" Width="307" Grid.Row="1" Background="White"/>
+                            <Button x:Name="btnWReported" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="65" Width="65" Click="btnSendMsg_Click">
+                                <TextBlock Text="write Reported" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
+                            <Button x:Name="btnReadDT" Grid.Column="1"  HorizontalAlignment="Left" Margin="11,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Click="btnReadDT_Click">
+                                <TextBlock Text="read Device Twin" TextWrapping="Wrap" TextAlignment="Center" Height="45"/>
+                            </Button>
+                            <Button x:Name="btnDTReadDesired" Grid.Column="1" HorizontalAlignment="Center" Margin="0,70,0,0" Grid.Row="1" VerticalAlignment="Top" Height="70" Click="btnDTReadDesired_Click" Width="66">
+                                <TextBlock Text="subscribe on Device Twin Desired Properties" TextWrapping="Wrap" TextAlignment="Center" Height="64" Width="61"/>
+                            </Button>
                         </Grid>
                     </TabItem>
 
@@ -74,10 +92,14 @@
                                 <RowDefinition Height="10*"/>
                                 <RowDefinition Height="70*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="tbMsgsExample" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="282" Width="414" Grid.Row="1"/>
+                            <TextBlock x:Name="tbMsgsExample" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="262" Width="394" Grid.Row="1" Background="White"/>
 
-                            <Button x:Name="btnGenerateStreamStop" HorizontalAlignment="Left" Margin="182,3,0,0" VerticalAlignment="Top" Height="27" Width="175" Click="btnSendMsg_Click" Content="Generate stream - Stop"/>
-                            <Button x:Name="btnGenStream" Content="Generate stream - Start" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="27" Click="btnGenStream_Click" Width="147"/>
+                            <Button x:Name="btnGenerateStreamStop" HorizontalAlignment="Left" Margin="182,3,0,0" VerticalAlignment="Top" Height="27" Width="175" Click="btnSendMsg_Click">
+                                <TextBlock Text="Generate stream - Stop" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
+                            <Button x:Name="btnGenStream" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="27" Click="btnGenStream_Click" Width="147">
+                                <TextBlock Text="Generate stream - Start" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
 
                         </Grid>
                     </TabItem>
@@ -92,10 +114,14 @@
                                 <RowDefinition Height="10*"/>
                                 <RowDefinition Height="9*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="tbModuleTwinRepProps" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="327"/>
-                            <TextBlock x:Name="tbModuletwinDesProps" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="140" Width="327" Grid.Row="1"/>
-                            <Button x:Name="btnModuleTwinRepProps" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="65" Width="65" Click="btnSendMsg_Click" Content="Set reported props"/>
-                            <Button x:Name="btnModuleTwinDesiredPropsSubsr" Grid.Column="1" Content="Subscribe module twin desired props" HorizontalAlignment="Left" Margin="11,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Click="btnModuleTwinDesiredPropsSubsr_Click"/>
+                            <TextBlock x:Name="tbModuleTwinRepProps" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="150" Width="307" Background="White"/>
+                            <TextBlock x:Name="tbModuletwinDesProps" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="140" Width="307" Grid.Row="1" Background="White"/>
+                            <Button x:Name="btnModuleTwinRepProps" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="65" Width="65" Click="btnSendMsg_Click">
+                                <TextBlock Text="Set reported props" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
+                            <Button x:Name="btnModuleTwinDesiredPropsSubsr" Grid.Column="1"  HorizontalAlignment="Left" Margin="11,10,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Click="btnModuleTwinDesiredPropsSubsr_Click">
+                                <TextBlock Text="Subscribe module twin desired props" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
                         </Grid>
                     </TabItem>
 
@@ -103,7 +129,9 @@
                         <Grid Background="#FFE5E5E5">
                             <Label Grid.Column="2" Content="Direct method name" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <TextBox x:Name="tbDirectMethodName" Text="SetTelemetryInterval" HorizontalAlignment="Center" Margin="0,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360"/>
-                            <Button x:Name="btnSubscribeDirectMethod" Content="Subscribe direct method" HorizontalAlignment="Left" Margin="104,65,0,0" VerticalAlignment="Top" Height="55" Click="btnSubscribeDirectMethod_Click"/>
+                            <Button x:Name="btnSubscribeDirectMethod"  HorizontalAlignment="Left" Margin="104,65,0,0" VerticalAlignment="Top" Height="55" Click="btnSubscribeDirectMethod_Click" Width="103">
+                                <TextBlock Text="Subscribe direct method" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
                         </Grid>
                     </TabItem>
                 </TabControl>

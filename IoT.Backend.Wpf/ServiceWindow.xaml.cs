@@ -5,15 +5,29 @@ using Azure.Storage.Blobs;
 using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Xml;
 
-namespace IoT.Backend
+namespace IoT.Backend.Wpf
 {
-    public partial class BackForm : Form
+    /// <summary>
+    /// Interaction logic for ServiceWindow.xaml
+    /// </summary>
+    public partial class ServiceWindow : Window
     {
         private static IotHubServiceClient _serviceClient;
 
@@ -21,7 +35,7 @@ namespace IoT.Backend
 
         private EventProcessorClient processor;
 
-        public BackForm()
+        public ServiceWindow()
         {
             _parameters = new Parameters();
 
@@ -33,9 +47,11 @@ namespace IoT.Backend
             _serviceClient = (new IotHubServiceClient(_parameters.IoTHubConnectionString, options));
 
             InitializeComponent();
+            tbCorrelationId.Text = Guid.NewGuid().ToString("D");
         }
 
-        private async void btnStartReceiving_Click(object sender, EventArgs e)
+
+        private async void btnStartReceiving_Click(object sender, RoutedEventArgs e)
         {
             // Either the connection string must be supplied, or the set of endpoint, name, and shared access key must be.
             if (string.IsNullOrWhiteSpace(_parameters.EventHubConnectionString)) MessageBox.Show("error");
@@ -52,7 +68,7 @@ namespace IoT.Backend
             await processor.StartProcessingAsync();
         }
 
-        private async void btnStopReceiving_Click(object sender, EventArgs e)
+        private async void btnStopReceiving_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -71,13 +87,13 @@ namespace IoT.Backend
             Log($"Message received on partition {partitionEvent.Partition.PartitionId}:");
 
             var EventBody = Encoding.UTF8.GetString(partitionEvent.Data.EventBody.ToArray());
-            tbReceivedMsg.AppendText(JsonConvert.SerializeObject(
+            tbReceivedMsg.Text+=(JsonConvert.SerializeObject(
                 new
                 {
                     EventBody,
                     partitionEvent.Data.Properties,
                     partitionEvent.Data.SystemProperties,
-                }, Formatting.Indented));
+                }, Newtonsoft.Json.Formatting.Indented));
 
             // Update checkpoint in the blob storage so that the app receives only new events the next time it's run
             await partitionEvent.UpdateCheckpointAsync(partitionEvent.CancellationToken);
@@ -89,7 +105,7 @@ namespace IoT.Backend
             return Task.CompletedTask;
         }
 
-        private async void btnSendToDevice_Click(object sender, EventArgs e)
+        private async void btnSendToDevice_Click(object sender, RoutedEventArgs e)
         {
             _serviceClient = new IotHubServiceClient(_parameters.IoTHubConnectionString);
             var sendTask = SendC2dMessagesAsync(CancellationToken.None);
@@ -112,7 +128,7 @@ namespace IoT.Backend
                     {
                         batch.EnqueuedOnUtc,
                         batch.Records
-                    }, Formatting.Indented));
+                    }, Newtonsoft.Json.Formatting.Indented));
                 return Task.FromResult(AcknowledgementType.Complete);
             };
         }
@@ -153,7 +169,7 @@ namespace IoT.Backend
             public string BlobStorageConnectionString = ConfigurationSettings.AppSettings["BlobStorageConnectionString"];
         }
 
-        private async void btnWDesired_Click(object sender, EventArgs e)
+        private async void btnWDesired_Click(object sender, RoutedEventArgs e)
         {
             var twin = await _serviceClient.Twins.GetAsync(_parameters.DeviceId);
 
@@ -169,7 +185,7 @@ namespace IoT.Backend
             await _serviceClient.Twins.UpdateAsync(twin.DeviceId, twin, false);
         }
 
-        private async void btnRReported_Click(object sender, EventArgs e)
+        private async void btnReadDT_Click(object sender, RoutedEventArgs e)
         {
             var twin = await _serviceClient.Twins.GetAsync(_parameters.DeviceId);
             tbDTRead.Text = twin.ToString();//.ToJson(Formatting.Indented);
@@ -178,21 +194,16 @@ namespace IoT.Backend
 
         private void Log(string text)
         {
-            lbStatus.AppendText("\r\n" + text);
+            lbStatus.Text += ("\r\n" + text);
         }
 
-        private void BackForm_Load(object sender, EventArgs e)
-        {
-            CheckForIllegalCrossThreadCalls = false;
-            tbCorrelationId.Text = Guid.NewGuid().ToString("D");
-        }
 
-        private void btnClean_Click(object sender, EventArgs e)
+        private void btnClean_Click(object sender, RoutedEventArgs e)
         {
             lbStatus.Text = "";
         }
 
-        private async void btnSendRequest_DirectMethod_Click(object sender, EventArgs e)
+        private async void btnSendRequest_DirectMethod_Click(object sender, RoutedEventArgs e)
         {
             var methodInvocation = new DirectMethodServiceRequest(tbDirectMethodName.Text)
             {
@@ -206,11 +217,6 @@ namespace IoT.Backend
             DirectMethodClientResponse response = await _serviceClient.DirectMethods.InvokeAsync(tbDeviceId.Text, methodInvocation);
 
             MessageBox.Show($"Response status: {response.Status}, payload:\n\t{response.PayloadAsString}");
-        }
-
-        private void tbDirectMethodName_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
