@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="81*"/>
                 <ColumnDefinition Width="79*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="lbStatus" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="380" Width="385" Background="White"/>
+            <TextBox x:Name="lbStatus" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="380" Width="385" Background="White"/>
             <TabControl Grid.Column="1" Margin="0,0,10,10">
                 <TabItem Header="Receive from/Send to device">
                     <Grid Background="#FFE5E5E5">
@@ -43,7 +43,7 @@
                             <TextBlock Text="Stop receiving" TextWrapping="Wrap" TextAlignment="Center"/>
                         </Button>
                         <TextBox x:Name="tbSentMsg" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="284" Height="136"/>
-                        <TextBlock x:Name="tbReceivedMsg" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Height="103" Width="284" Background="White"/>
+                        <TextBox x:Name="tbReceivedMsg" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Height="103" Width="284" Background="White"/>
 
                     </Grid>
                 </TabItem>
@@ -58,7 +58,7 @@
                             <ColumnDefinition Width="72*"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="tbDTdesired" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="279" Height="145"/>
-                        <TextBlock x:Name="tbDTRead" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="167" Width="279" Background="White"/>
+                        <TextBox x:Name="tbDTRead" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="167" Width="279" Background="White"/>
                         <Button x:Name="btnWDesired" Grid.Column="1" HorizontalAlignment="Left" Margin="25,30,0,0" VerticalAlignment="Top" Click="btnWDesired_Click">
                             <TextBlock Text="Write" TextWrapping="Wrap" TextAlignment="Center"/>
                         </Button>
