@@ -87,7 +87,7 @@ namespace IoT.Backend.Wpf
             Log($"Message received on partition {partitionEvent.Partition.PartitionId}:");
 
             var EventBody = Encoding.UTF8.GetString(partitionEvent.Data.EventBody.ToArray());
-            tbReceivedMsg.Text+=(JsonConvert.SerializeObject(
+            tbReceivedMsg.Text += (JsonConvert.SerializeObject(
                 new
                 {
                     EventBody,
@@ -192,12 +192,6 @@ namespace IoT.Backend.Wpf
             Log("Device Twin content was read");
         }
 
-        private void Log(string text)
-        {
-            lbStatus.Text += ("\r\n" + text);
-        }
-
-
         private void btnClean_Click(object sender, RoutedEventArgs e)
         {
             lbStatus.Text = "";
@@ -217,6 +211,34 @@ namespace IoT.Backend.Wpf
             DirectMethodClientResponse response = await _serviceClient.DirectMethods.InvokeAsync(tbDeviceId.Text, methodInvocation);
 
             MessageBox.Show($"Response status: {response.Status}, payload:\n\t{response.PayloadAsString}");
+        }
+
+        private async void btnStartReceiveNotification_Click(object sender, RoutedEventArgs e)
+        {
+            _serviceClient.FileUploadNotifications.FileUploadNotificationProcessor = (FileUploadNotification fileUploadNotification) =>
+            {
+
+                Log(JsonConvert.SerializeObject(fileUploadNotification));
+                return Task.FromResult(AcknowledgementType.Complete);
+            };
+
+            Log("\nReceiving file upload notification from service");
+
+            await _serviceClient.FileUploadNotifications.OpenAsync(CancellationToken.None);
+        }
+
+        private async void btnStopReceiveNotification_Click(object sender, RoutedEventArgs e)
+        {
+            await _serviceClient.FileUploadNotifications.CloseAsync();
+            Log("\nStop receiving file upload notification from service");
+        }
+
+        private void Log(string text)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                lbStatus.Text += ("\r\n" + text);
+            });
         }
     }
 }

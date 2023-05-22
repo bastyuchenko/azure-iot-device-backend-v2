@@ -78,6 +78,16 @@
                         </Button>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Receive 'File upload' notification">
+                    <Grid Background="#FFE5E5E5">
+                        <Button x:Name="btnStartReceiveNotification" HorizontalAlignment="Left" Margin="262,26,0,0" VerticalAlignment="Top" Width="107" Height="64" Click="btnStartReceiveNotification_Click">
+                            <TextBlock Text="Start Receive notification" TextWrapping="Wrap" TextAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="btnStopReceiveNotification" HorizontalAlignment="Left" Margin="262,121,0,0" VerticalAlignment="Top" Width="107" Height="64" Click="btnStopReceiveNotification_Click">
+                            <TextBlock Text="Stop Receive notification" TextWrapping="Wrap" TextAlignment="Center"/>
+                        </Button>
+                    </Grid>
+                </TabItem>
             </TabControl>
         </Grid>
         <Label Content="Device ID" HorizontalAlignment="Left" Margin="25,14,0,0" VerticalAlignment="Top" Width="65"/>
