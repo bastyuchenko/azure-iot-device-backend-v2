@@ -84,16 +84,20 @@ namespace IoT.Backend.Wpf
 
         private async Task ProcessEventHandler(ProcessEventArgs partitionEvent)
         {
+
             Log($"Message received on partition {partitionEvent.Partition.PartitionId}:");
 
             var EventBody = Encoding.UTF8.GetString(partitionEvent.Data.EventBody.ToArray());
-            tbReceivedMsg.Text += (JsonConvert.SerializeObject(
+            this.Dispatcher.Invoke(() =>
+            {
+                tbReceivedMsg.Text += (JsonConvert.SerializeObject(
                 new
                 {
                     EventBody,
                     partitionEvent.Data.Properties,
                     partitionEvent.Data.SystemProperties,
                 }, Newtonsoft.Json.Formatting.Indented));
+            });
 
             // Update checkpoint in the blob storage so that the app receives only new events the next time it's run
             await partitionEvent.UpdateCheckpointAsync(partitionEvent.CancellationToken);
@@ -119,6 +123,7 @@ namespace IoT.Backend.Wpf
             // It is important to note that receiver only gets feedback messages when the device is actively running and acting on messages.
             Log("Starting to listen to feedback messages");
 
+            
             _serviceClient.MessageFeedback.MessageFeedbackProcessor =
             (FeedbackBatch batch) =>
             {
@@ -131,13 +136,15 @@ namespace IoT.Backend.Wpf
                     }, Newtonsoft.Json.Formatting.Indented));
                 return Task.FromResult(AcknowledgementType.Complete);
             };
+            await _serviceClient.MessageFeedback.OpenAsync(token);
         }
 
         private async Task SendC2dMessagesAsync(CancellationToken cancellationToken)
         {
             var messageId = Guid.NewGuid().ToString("D");
             tbMessageId.Text = messageId;
-            var message = new OutgoingMessage(Encoding.ASCII.GetBytes(tbSentMsg.Text))
+            //var message = new OutgoingMessage(Encoding.ASCII.GetBytes(tbSentMsg.Text))
+            var message = new OutgoingMessage(tbSentMsg.Text)
             {
                 MessageId = messageId,
                 CorrelationId = tbCorrelationId.Text,

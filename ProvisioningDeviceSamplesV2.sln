@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Device.Wpf", "IoT.Devic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Backend.Wpf", "IoT.Backend.Wpf\IoT.Backend.Wpf.csproj", "{F0C968BC-3147-4E68-A9ED-853E3DF6B540}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.Device.SASAuth.FileUpload.Wpf", "IoT.Device.SASAuth.FileUpload.Wpf\IoT.Device.SASAuth.FileUpload.Wpf.csproj", "{C0701CAC-B024-44D8-83B7-CB5D560DEB26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Device.SASAuth.FileUpload.Wpf", "IoT.Device.SASAuth.FileUpload.Wpf\IoT.Device.SASAuth.FileUpload.Wpf.csproj", "{C0701CAC-B024-44D8-83B7-CB5D560DEB26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIssueForGit", "TestIssueForGit\TestIssueForGit.csproj", "{2AF69E6F-FDA2-4E73-B0AA-B347B29D1622}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{C0701CAC-B024-44D8-83B7-CB5D560DEB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0701CAC-B024-44D8-83B7-CB5D560DEB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0701CAC-B024-44D8-83B7-CB5D560DEB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF69E6F-FDA2-4E73-B0AA-B347B29D1622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF69E6F-FDA2-4E73-B0AA-B347B29D1622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF69E6F-FDA2-4E73-B0AA-B347B29D1622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF69E6F-FDA2-4E73-B0AA-B347B29D1622}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

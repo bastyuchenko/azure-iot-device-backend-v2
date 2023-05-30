@@ -120,7 +120,9 @@ namespace IoT.Device.Wpf
                 async (IncomingMessage message) =>
                 {
                     message.TryGetPayload<string>(out var payload);
-                    tbReceivedMsg.Text += (JsonConvert.SerializeObject(
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        tbReceivedMsg.Text += (JsonConvert.SerializeObject(
                         new
                         {
                             Body = payload,
@@ -129,6 +131,7 @@ namespace IoT.Device.Wpf
                             message.To,
                             message.CorrelationId
                         }, Newtonsoft.Json.Formatting.Indented));
+                    });
 
                     return MessageAcknowledgement.Complete;
                 }).ConfigureAwait(false);
@@ -318,7 +321,7 @@ namespace IoT.Device.Wpf
 
         private async void btnStopTelemetryMessageReceiving_Click(object sender, RoutedEventArgs e)
         {
-            await deviceClient.SetIncomingMessageCallbackAsync(null).ConfigureAwait(false);
+            await deviceClient.SetIncomingMessageCallbackAsync(null);
         }
     }
 }
