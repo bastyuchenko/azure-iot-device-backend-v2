@@ -17,23 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Libs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.Core" Version="1.32.0" />
+    <PackageReference Include="Azure.Core" Version="1.31.0" />
     <PackageReference Include="Microsoft.Azure.Amqp" Version="2.6.2" />
-    <PackageReference Include="MQTTnet" Version="4.2.1.781" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Azure.Devices.Client">
-      <HintPath>Libs\Microsoft.Azure.Devices.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Devices.Provisioning.Client">
-      <HintPath>Libs\Microsoft.Azure.Devices.Provisioning.Client.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.42.0" />
+    <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Client" Version="1.19.3" />
+    <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.17.3" />
+    <PackageReference Include="Microsoft.Azure.Devices.Shared" Version="1.30.3" />
+    <PackageReference Include="MQTTnet" Version="4.1.4.563" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>
