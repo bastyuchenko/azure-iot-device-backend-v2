@@ -57,6 +57,12 @@
         "IoT.Backend.Wpf": {},
         "IoT.Device.Wpf": {}
       }
+    },
+    "Backend + TestIssueForGit": {
+      "Projects": {
+        "IoT.Backend.Wpf": {},
+        "TestIssueForGit": {}
+      }
     }
   }
 }

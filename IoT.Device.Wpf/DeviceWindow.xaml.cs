@@ -91,7 +91,20 @@ namespace IoT.Device.Wpf
             Log("Creating X509 authentication for IoT Hub...");
             IAuthenticationMethod auth = new ClientAuthenticationWithX509Certificate(x509Certificate, security.GetRegistrationId());
 
-            deviceClient = new IotHubDeviceClient(provisioningDetails.IotHubHostName, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
+            var mqttSettings = new IotHubClientMqttSettings
+            {
+                // this property specify time to send keep alive ping in seconds
+                // Based on Azure IoT SDK C, default value for OPTION_KEEP_ALIVE is 4 min
+                IdleTimeout = TimeSpan.FromMinutes(4)
+            };
+
+            var options = new IotHubClientOptions(mqttSettings)
+            {
+                //PayloadConvention = CustomPayloadConvention.Instance,
+                RetryPolicy = new CustomIotHubClientExponentialBackoffRetryPolicy()
+            };
+
+            deviceClient = new IotHubDeviceClient(provisioningDetails.IotHubHostName, auth, options);
             deviceClient.ConnectionStatusChangeCallback = (ConnectionStatusInfo info) =>
             {
                 Log($"Device Status {info.Status}; Change reason: {info.ChangeReason}; Recommended action {info.RecommendedAction}.");

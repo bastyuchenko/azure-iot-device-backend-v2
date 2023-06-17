@@ -7,19 +7,18 @@ namespace GenerateCertificates
     {
         private static async Task Main(string[] args)
         {
-            var provisioningCertificate = Certificate.GenerateRsaCertificate("iothubx509device1");
-            var signatureVerifyCertificate = Certificate.GenerateEcdsaCertificate("iothubx509device1Ecdsa");
+            var provisioningCertificate = Certificate.GenerateRsaCertificate("iothubx509device1-test");
 
             await File.WriteAllTextAsync(
-                    "deviceName-provisioning-cert.pem",
+                    "deviceName-provisioning-cert-test.pem",
                 provisioningCertificate.GetCertificate());
 
             await File.WriteAllTextAsync(
-                    "deviceName-provisioning-key.pem",
+                    "deviceName-provisioning-key-test.pem",
                 provisioningCertificate.GetPrivateKey());
 
-            var provisioningCert = await File.ReadAllTextAsync("deviceName-provisioning-cert.pem");
-            var provisioningKey = await File.ReadAllTextAsync("deviceName-provisioning-key.pem");
+            var provisioningCert = await File.ReadAllTextAsync("deviceName-provisioning-cert-test.pem");
+            var provisioningKey = await File.ReadAllTextAsync("deviceName-provisioning-key-test.pem");
 
             var sslCert = X509Certificate2.CreateFromEncryptedPem(provisioningCert, provisioningKey, "Qwer!234");
             // https://github.com/dotnet/runtime/issues/23749#issuecomment-747407051

@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="81*"/>
                 <ColumnDefinition Width="79*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="lbStatus" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="380" Width="385" Background="White"/>
+            <TextBox x:Name="lbStatus" TextWrapping="Wrap" Background="White" Margin="10,0,10,10"/>
             <TabControl Grid.Column="1" Margin="0,0,10,10">
                 <TabItem Header="Receive from/Send to device">
                     <Grid Background="#FFE5E5E5">
@@ -42,8 +42,8 @@
                         <Button x:Name="btnStopReceiving" Grid.Column="1" HorizontalAlignment="Center" Margin="0,55,0,0" Grid.Row="2" VerticalAlignment="Top" Click="btnStopReceiving_Click" Width="75" Height="58">
                             <TextBlock Text="Stop receiving" TextWrapping="Wrap" TextAlignment="Center"/>
                         </Button>
-                        <TextBox x:Name="tbSentMsg" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="284" Height="136"/>
-                        <TextBox x:Name="tbReceivedMsg" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Height="103" Width="284" Background="White"/>
+                        <TextBox x:Name="tbSentMsg" Grid.Row="1" TextWrapping="Wrap" Margin="10,5,10,6"/>
+                        <TextBox x:Name="tbReceivedMsg" HorizontalAlignment="Right" Grid.Row="2" TextWrapping="Wrap" Width="284" Background="White" Margin="0,6,10,7"/>
 
                     </Grid>
                 </TabItem>
@@ -57,8 +57,8 @@
                             <ColumnDefinition Width="317*"/>
                             <ColumnDefinition Width="72*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="tbDTdesired" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="279" Height="145"/>
-                        <TextBox x:Name="tbDTRead" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Height="167" Width="279" Background="White"/>
+                        <TextBox x:Name="tbDTdesired" TextWrapping="Wrap" Margin="15,8,15,8"/>
+                        <TextBox x:Name="tbDTRead" Grid.Row="1" TextWrapping="Wrap" Background="White" Margin="15,10,15,10"/>
                         <Button x:Name="btnWDesired" Grid.Column="1" HorizontalAlignment="Left" Margin="25,30,0,0" VerticalAlignment="Top" Click="btnWDesired_Click">
                             <TextBlock Text="Write" TextWrapping="Wrap" TextAlignment="Center"/>
                         </Button>
@@ -72,7 +72,7 @@
                         <Label Content="Direct method name" HorizontalAlignment="Left" Margin="17,15,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="tbDirectMethodName" HorizontalAlignment="Left" Margin="23,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" Text="SetTelemetryInterval"/>
                         <Label Content="Direct method payload" HorizontalAlignment="Left" Margin="11,89,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="tbDirectMethodPayload" HorizontalAlignment="Left" Margin="23,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="346" Height="227" Text="10"/>
+                        <TextBox x:Name="tbDirectMethodPayload" Margin="23,115,10,10" TextWrapping="Wrap" Text="10"/>
                         <Button x:Name="btnSendRequest_DirectMethod" HorizontalAlignment="Left" Margin="262,26,0,0" VerticalAlignment="Top" Click="btnSendRequest_DirectMethod_Click" Width="107" Height="64">
                             <TextBlock Text="Send request through direct method" TextWrapping="Wrap" TextAlignment="Center"/>
                         </Button>

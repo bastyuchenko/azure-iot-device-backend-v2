@@ -10,7 +10,7 @@
 *.cer
 *.pfx
 *.pem
-/.vs
+.vs
 /IoT.Device/iothubx509device1
 /IoT.Device/iothubx509device1
 */bin/*
@@ -19,3 +19,5 @@
 *.csproj.user
 /IoT.Backend.Wpf/App.config
 /IoT.Backend.Wpf/iothubx509device1
+bin
+obj

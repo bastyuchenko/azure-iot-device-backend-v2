@@ -8,15 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="deviceName-provisioning-cert.pem">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="deviceName-provisioning-key.pem">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Libs\" />
   </ItemGroup>
 
@@ -28,12 +19,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Azure.Devices.Client">
-      <HintPath>Libs\Microsoft.Azure.Devices.Client.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\..\..\DMLR\azure-iot-sdk-csharp\iothub\device\src\Microsoft.Azure.Devices.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Microsoft.Azure.Devices.Provisioning.Client">
       <HintPath>Libs\Microsoft.Azure.Devices.Provisioning.Client.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="deviceName-provisioning-cert-anton.pem">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="deviceName-provisioning-key-anton.pem">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
