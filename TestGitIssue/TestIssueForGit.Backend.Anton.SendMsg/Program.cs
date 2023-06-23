@@ -2,6 +2,7 @@
 using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Text;
 
 namespace TestIssueForGit.Backend.Anton
 {
@@ -13,30 +14,14 @@ namespace TestIssueForGit.Backend.Anton
         {
             _serviceClient = new IotHubServiceClient(ConfigurationManager.AppSettings["IoTHubConnectionString"]);
 
-            await ReceiveMessageFeedbacksAsync(CancellationToken.None);
-            await SendC2dMessagesAsync(CancellationToken.None);
-
-            await Task.Delay(-1);
-        }
-
-        private static async Task ReceiveMessageFeedbacksAsync(CancellationToken token)
-        {
-            // It is important to note that receiver only gets feedback messages when the device is actively running and acting on messages.
-
-            _serviceClient.MessageFeedback.MessageFeedbackProcessor =
-            (FeedbackBatch batch) =>
+            while (true)
             {
-                Console.WriteLine("New Feedback received:");
-                Console.WriteLine(JsonConvert.SerializeObject(
-                    new
-                    {
-                        batch.EnqueuedOnUtc,
-                        batch.Records
-                    }, Formatting.Indented));
-                return Task.FromResult(AcknowledgementType.Complete);
-            };
-            await _serviceClient.MessageFeedback.OpenAsync(token);
+                await Console.Out.WriteLineAsync("Send message: ");
+                Console.ReadKey();
+                await SendC2dMessagesAsync(CancellationToken.None);
+            }
         }
+
 
         private static async Task SendC2dMessagesAsync(CancellationToken cancellationToken)
         {

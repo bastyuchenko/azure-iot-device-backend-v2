@@ -5,8 +5,6 @@ namespace TestIssueForGit.Backend.Anton
 {
     internal static class Helper
     {
-        internal const string IdScope = "0ne0050D9A6"; // anton
-
         internal const string DeviceId = "iothubx509device1-anton";
 
         internal static X509Certificate2 LoadProvisioningCertificate(

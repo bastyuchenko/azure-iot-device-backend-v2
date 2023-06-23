@@ -16,17 +16,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Backend.Wpf", "IoT.Back
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.Device.SASAuth.FileUpload.Wpf", "IoT.Device.SASAuth.FileUpload.Wpf\IoT.Device.SASAuth.FileUpload.Wpf.csproj", "{C0701CAC-B024-44D8-83B7-CB5D560DEB26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Devices.Client", "..\..\DMLR\azure-iot-sdk-csharp\iothub\device\src\Microsoft.Azure.Devices.Client.csproj", "{41660AFC-A3B3-4A63-B7FE-E6D33CB94ECF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestGitIssue", "TestGitIssue", "{6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCreateDeviceIdentity.Anton", "TestGitIssue\TestCreateDeviceIdentity.Anton\TestCreateDeviceIdentity.Anton.csproj", "{049E2FA9-02DE-4FD2-BD10-A0CFB1CF19F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCreateEnrollment.Anton", "TestGitIssue\TestCreateEnrollment.Anton\TestCreateEnrollment.Anton.csproj", "{3BC01D56-5CC7-4798-8F09-9F1F47E14851}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIssueForGit.Backend.Anton", "TestGitIssue\TestIssueForGit.Backend.Anton\TestIssueForGit.Backend.Anton.csproj", "{73244ADE-D690-435E-BC43-94731B5EC319}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIssueForGit.Device.Anton", "TestGitIssue\TestIssueForGit.Device.Anton\TestIssueForGit.Device.Anton.csproj", "{2DC67B39-7C98-40CF-81E7-E9FED766D67D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIssueForGit.Backend.Anton.Feedback", "TestGitIssue\TestIssueForGit.Backend.Anton.Feedback\TestIssueForGit.Backend.Anton.Feedback.csproj", "{1B00ECF5-36F6-48B3-A541-042C2618CB23}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIssueForGit.Backend.Anton.SendMsg", "TestGitIssue\TestIssueForGit.Backend.Anton.SendMsg\TestIssueForGit.Backend.Anton.SendMsg.csproj", "{359F915C-050F-4C3D-9242-5212531E4836}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{CDBFA7D0-E65C-40A6-ACF9-58A9BEC29945}"
+	ProjectSection(SolutionItems) = preProject
+		Libs\Microsoft.Azure.Devices.Client.dll = Libs\Microsoft.Azure.Devices.Client.dll
+		Libs\Microsoft.Azure.Devices.Provisioning.Client.dll = Libs\Microsoft.Azure.Devices.Provisioning.Client.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +56,6 @@ Global
 		{C0701CAC-B024-44D8-83B7-CB5D560DEB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0701CAC-B024-44D8-83B7-CB5D560DEB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0701CAC-B024-44D8-83B7-CB5D560DEB26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41660AFC-A3B3-4A63-B7FE-E6D33CB94ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41660AFC-A3B3-4A63-B7FE-E6D33CB94ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41660AFC-A3B3-4A63-B7FE-E6D33CB94ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41660AFC-A3B3-4A63-B7FE-E6D33CB94ECF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{049E2FA9-02DE-4FD2-BD10-A0CFB1CF19F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{049E2FA9-02DE-4FD2-BD10-A0CFB1CF19F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{049E2FA9-02DE-4FD2-BD10-A0CFB1CF19F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,14 +64,18 @@ Global
 		{3BC01D56-5CC7-4798-8F09-9F1F47E14851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BC01D56-5CC7-4798-8F09-9F1F47E14851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BC01D56-5CC7-4798-8F09-9F1F47E14851}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73244ADE-D690-435E-BC43-94731B5EC319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73244ADE-D690-435E-BC43-94731B5EC319}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73244ADE-D690-435E-BC43-94731B5EC319}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73244ADE-D690-435E-BC43-94731B5EC319}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2DC67B39-7C98-40CF-81E7-E9FED766D67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2DC67B39-7C98-40CF-81E7-E9FED766D67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DC67B39-7C98-40CF-81E7-E9FED766D67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DC67B39-7C98-40CF-81E7-E9FED766D67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B00ECF5-36F6-48B3-A541-042C2618CB23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B00ECF5-36F6-48B3-A541-042C2618CB23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B00ECF5-36F6-48B3-A541-042C2618CB23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B00ECF5-36F6-48B3-A541-042C2618CB23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{359F915C-050F-4C3D-9242-5212531E4836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{359F915C-050F-4C3D-9242-5212531E4836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{359F915C-050F-4C3D-9242-5212531E4836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{359F915C-050F-4C3D-9242-5212531E4836}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,8 +83,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{049E2FA9-02DE-4FD2-BD10-A0CFB1CF19F2} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
 		{3BC01D56-5CC7-4798-8F09-9F1F47E14851} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
-		{73244ADE-D690-435E-BC43-94731B5EC319} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
 		{2DC67B39-7C98-40CF-81E7-E9FED766D67D} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
+		{1B00ECF5-36F6-48B3-A541-042C2618CB23} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
+		{359F915C-050F-4C3D-9242-5212531E4836} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88111BA1-4E11-436B-B373-4D0205BDFEDA}

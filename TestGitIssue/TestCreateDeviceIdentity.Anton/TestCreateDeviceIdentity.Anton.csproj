@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestCreateEnrollment.Anton\TestCreateEnrollment.Anton.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

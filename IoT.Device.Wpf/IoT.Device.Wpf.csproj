@@ -28,12 +28,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="Microsoft.Azure.Devices.Client">
-			<HintPath>Libs\Microsoft.Azure.Devices.Client.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.Azure.Devices.Provisioning.Client">
-			<HintPath>Libs\Microsoft.Azure.Devices.Provisioning.Client.dll</HintPath>
-		</Reference>
+	  <Reference Include="Microsoft.Azure.Devices.Client">
+	    <HintPath>..\Libs\Microsoft.Azure.Devices.Client.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Microsoft.Azure.Devices.Provisioning.Client">
+	    <HintPath>..\Libs\Microsoft.Azure.Devices.Provisioning.Client.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>
