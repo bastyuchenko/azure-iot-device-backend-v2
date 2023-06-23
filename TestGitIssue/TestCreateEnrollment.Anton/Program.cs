@@ -48,10 +48,9 @@ namespace TestCreateEnrollment.Anton
             {
                 provisioningServiceClient.IndividualEnrollments.DeleteAsync("iothubx509device1");
 
-
                 #region Create a new individual enrollment config
                 Console.WriteLine("\nCreating a new enrollmentGroup...");
-                var certificate = Helper.LoadProvisioningCertificate();
+                var certificate = Helper.LoadProvisioningCertificate(ConfigurationManager.AppSettings["CertPassword"]);
                 Attestation attestation = X509Attestation.CreateFromRootCertificates(certificate);
 
                 IndividualEnrollment individualEnrollment =

@@ -1,16 +1,15 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
 namespace TestCreateEnrollment.Anton
 {
     internal static class Helper
     {
-        internal const string IdScope = "0ne0050D9A6"; // anton
-
         internal static X509Certificate2 LoadProvisioningCertificate(
+            string certPassword,
             string certificateName = "deviceName-provisioning-cert-anton.pem",
             string certificatePrivateKeyName = "deviceName-provisioning-key-anton.pem",
-            string certPassword = "Qwer!234",
             bool includeKey = true)
         {
             var workingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -35,7 +34,7 @@ namespace TestCreateEnrollment.Anton
 
         internal static X509Certificate2 LoadProvisioningCertificateWithoutKey()
         {
-            return LoadProvisioningCertificate("deviceName-provisioning-cert-anton.pem", string.Empty, string.Empty, false);
+            return LoadProvisioningCertificate(string.Empty, "deviceName-provisioning-cert-anton.pem", string.Empty, false);
         }
     }
 }
