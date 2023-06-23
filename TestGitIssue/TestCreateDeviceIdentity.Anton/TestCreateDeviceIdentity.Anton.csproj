@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="deviceName-provisioning-cert-anton.pem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

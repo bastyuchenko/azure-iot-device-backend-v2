@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Devices;
 using System.Configuration;
+using System.Data;
 
 namespace TestCreateDeviceIdentity.Anton
 {
@@ -9,17 +10,22 @@ namespace TestCreateDeviceIdentity.Anton
         {
             var iotHubServiceClient = new IotHubServiceClient(ConfigurationManager.AppSettings["IoTHubConnectionString"]);
 
-            var device = new Device(Helper.DeviceId);
-
             var certificate = Helper.LoadProvisioningCertificate();
-            device.Authentication = new AuthenticationMechanism()
+
+            var device = new Device(Helper.DeviceId)
             {
-                X509Thumbprint = new X509Thumbprint()
+                Authentication = new AuthenticationMechanism()
                 {
-                    PrimaryThumbprint = certificate.Thumbprint,
-                    SecondaryThumbprint = certificate.Thumbprint
+                    Type = ClientAuthenticationType.SelfSigned,
+                    X509Thumbprint = new X509Thumbprint()
+                    {
+                        PrimaryThumbprint = certificate.Thumbprint,
+                        SecondaryThumbprint = certificate.Thumbprint
+                    }
                 }
             };
+
+            device.Status = ClientStatus.Enabled;
 
             await iotHubServiceClient.Devices.CreateAsync(device);
         }
