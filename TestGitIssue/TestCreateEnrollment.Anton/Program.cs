@@ -29,7 +29,14 @@ namespace TestCreateEnrollment.Anton
                 IndividualEnrollment individualEnrollment =
                         new IndividualEnrollment(registrationId, attestation)
                         {
-                            ProvisioningStatus = ProvisioningStatus.Enabled
+                            ProvisioningStatus = ProvisioningStatus.Enabled,
+                            AllocationPolicy = AllocationPolicy.GeoLatency,
+                            ReprovisionPolicy = 
+                            new ReprovisionPolicy() 
+                            { 
+                                MigrateDeviceData = true, 
+                                UpdateHubAssignment = true
+                            }
                         };
                 #endregion
 

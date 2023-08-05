@@ -5,11 +5,7 @@ namespace TestIssueForGit.Device.Anton
 {
     internal static class Helper
     {
-        internal const string IotHubHostName = "anton-iot-hub-first.azure-devices.net";
-        //internal const string IotHubHostName = "hub-oludmweutest.azure-devices.net";
-        //internal const string IotHubHostName = "hub-dmweuperf.azure-devices.net";
-        //internal const string IotHubHostName = "test-prop-feature.azure-devices.net";
-        //internal const string IotHubHostName = "anton-iot-hub-payable.azure-devices.net";
+        public static string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
 
         internal static X509Certificate2 LoadProvisioningCertificate(
             string certPassword,

@@ -1,16 +1,18 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
-namespace TestIssueForGit
+namespace TestIssueForGit.Device.Anton.V1
 {
     internal static class Helper
     {
-        internal const string IdScope = "0ne0050D9A6";
+        internal static string IotHubHostName = ConfigurationManager.AppSettings["IotHubHostName"]!;
 
         internal static X509Certificate2 LoadProvisioningCertificate(
-            string certificateName= "deviceName-provisioning-cert.pem", 
-            string certificatePrivateKeyName = "deviceName-provisioning-key.pem", 
-            string certPassword="Qwer!234")
+            string certPassword,
+            string certificateName = "deviceName-provisioning-cert-anton.pem",
+            string certificatePrivateKeyName = "deviceName-provisioning-key-anton.pem"
+           )
         {
             var workingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var certificate = Path.Combine(workingDirectory, certificateName);

@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="deviceName-provisioning-cert.pem">
+    <None Update="deviceName-provisioning-cert-anton.pem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="deviceName-provisioning-key.pem">
+    <None Update="deviceName-provisioning-key-anton.pem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

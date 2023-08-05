@@ -16,7 +16,7 @@ namespace TestIssueForGit.Backend.Anton
 
             while (true)
             {
-                await Console.Out.WriteLineAsync("Send message: ");
+                await Console.Out.WriteLineAsync("Press Enter to send message... ");
                 Console.ReadKey();
                 await SendC2dMessagesAsync(CancellationToken.None);
             }

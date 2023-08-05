@@ -10,97 +10,53 @@ namespace TestIssueForGit.Device.Anton
     {
         static async Task Main(string[] args)
         {
+            //await AddDeviceIdentityFromEnrollment();
+            await AddDeviceIdentityDirectly();
+        }
+
+        private static async Task AddDeviceIdentityFromEnrollment()
+        {
             X509Certificate2 x509Certificate = Helper.LoadProvisioningCertificate(ConfigurationManager.AppSettings["CertPassword"]);
             var security = new AuthenticationProviderX509(x509Certificate);
 
-            var registrationId = security.GetRegistrationId();
+            var provClient = new ProvisioningDeviceClient(
+                Helper.GlobalDeviceEndpoint,
+                ConfigurationManager.AppSettings["IdScope"],
+                security,
+                options: new ProvisioningClientOptions(new ProvisioningClientMqttSettings()));
 
+            var result = await provClient.RegisterAsync();
+
+            var registrationId = security.GetRegistrationId();
             IAuthenticationMethod auth = new ClientAuthenticationWithX509Certificate(x509Certificate, registrationId);
 
-            var deviceClient = new IotHubDeviceClient(Helper.IotHubHostName, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
-
+            var deviceClient = new IotHubDeviceClient(result.AssignedHub, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
             deviceClient.ConnectionStatusChangeCallback = (info) =>
             {
                 Console.WriteLine($"Device Status {info.Status}; Change reason: {info.ChangeReason}; Recommended action {info.RecommendedAction}.");
             };
             await deviceClient!.OpenAsync(CancellationToken.None);
 
-            //await deviceClient.SetIncomingMessageCallbackAsync(
-            //    async (message) =>
-            //    {
-            //        try
-            //        {
-            //            message.TryGetPayload<string>(out var payload);
 
-            //            Console.WriteLine(JsonConvert.SerializeObject(
-            //            new
-            //            {
-            //                Body = payload,
-            //                message.Properties,
-            //                message.MessageId,
-            //                message.To,
-            //                message.CorrelationId
-            //            }, Formatting.Indented));
-            //            return MessageAcknowledgement.Complete;
-            //        }
-            //        finally
-            //        {
-            //            //taskCompletionSource.SetResult();
-            //        }
-            //    }).ConfigureAwait(false);
+            await deviceClient.SetIncomingMessageCallbackAsync(
+                async (IncomingMessage message) =>
+                {
+                    message.TryGetPayload<string>(out var payload);
 
-            //await Task.Delay(20000);
-
-            //await deviceClient.DisposeAsync();
-
-            //await deviceClient.SetIncomingMessageCallbackAsync(null);
+                    Console.WriteLine(JsonConvert.SerializeObject(
+                    new
+                    {
+                        Body = payload,
+                        message.Properties,
+                        message.MessageId,
+                        message.To,
+                        message.CorrelationId
+                    }, Newtonsoft.Json.Formatting.Indented));
+                    return MessageAcknowledgement.Complete;
+                }).ConfigureAwait(false);
 
             await Task.Delay(-1);
         }
-
-        //private static async Task AddDeviceIdentityFromEnrollment()
-        //{
-        //    X509Certificate2 x509Certificate = Helper.LoadProvisioningCertificate();
-        //    var security = new AuthenticationProviderX509(x509Certificate);
-
-        //    var provClient = new ProvisioningDeviceClient(
-        //        Helper.GlobalDeviceEndpoint,
-        //         Helper.IdScope,
-        //        security,
-        //        options: new ProvisioningClientOptions(new ProvisioningClientMqttSettings()));
-
-        //    var result = await provClient.RegisterAsync();
-
-        //    var registrationId = security.GetRegistrationId();
-        //    IAuthenticationMethod auth = new ClientAuthenticationWithX509Certificate(x509Certificate, registrationId);
-
-        //    var deviceClient = new IotHubDeviceClient(result.AssignedHub, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
-        //    deviceClient.ConnectionStatusChangeCallback = (info) =>
-        //    {
-        //        Console.WriteLine($"Device Status {info.Status}; Change reason: {info.ChangeReason}; Recommended action {info.RecommendedAction}.");
-        //    };
-        //    await deviceClient!.OpenAsync(CancellationToken.None);
-
-
-        //    //await deviceClient.SetIncomingMessageCallbackAsync(
-        //    //    async (IncomingMessage message) =>
-        //    //    {
-        //    //        message.TryGetPayload<string>(out var payload);
-
-        //    //        Console.WriteLine(JsonConvert.SerializeObject(
-        //    //        new
-        //    //        {
-        //    //            Body = payload,
-        //    //            message.Properties,
-        //    //            message.MessageId,
-        //    //            message.To,
-        //    //            message.CorrelationId
-        //    //        }, Newtonsoft.Json.Formatting.Indented));
-        //    //        return MessageAcknowledgement.Complete;
-        //    //    }).ConfigureAwait(false);
-
-        //    await Task.Delay(-1);
-        //}
 
         async static Task AddDeviceIdentityDirectly()
         {
@@ -111,7 +67,7 @@ namespace TestIssueForGit.Device.Anton
 
             IAuthenticationMethod auth = new ClientAuthenticationWithX509Certificate(x509Certificate, registrationId);
 
-            var deviceClient = new IotHubDeviceClient(Helper.IotHubHostName, auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
+            var deviceClient = new IotHubDeviceClient(ConfigurationManager.AppSettings["IotHubHostName"], auth, new IotHubClientOptions(new IotHubClientMqttSettings()));
 
             deviceClient.ConnectionStatusChangeCallback = (info) =>
             {
@@ -119,23 +75,35 @@ namespace TestIssueForGit.Device.Anton
             };
             await deviceClient!.OpenAsync(CancellationToken.None);
 
+            await deviceClient.SetIncomingMessageCallbackAsync(
+                async (message) =>
+                {
+                    try
+                    {
+                        message.TryGetPayload<string>(out var payload);
 
-            //await deviceClient.SetIncomingMessageCallbackAsync(
-            //    async (IncomingMessage message) =>
-            //    {
-            //        message.TryGetPayload<string>(out var payload);
+                        Console.WriteLine(JsonConvert.SerializeObject(
+                        new
+                        {
+                            Body = payload,
+                            message.Properties,
+                            message.MessageId,
+                            message.To,
+                            message.CorrelationId
+                        }, Formatting.Indented));
+                        return MessageAcknowledgement.Complete;
+                    }
+                    finally
+                    {
+                        //taskCompletionSource.SetResult();
+                    }
+                }).ConfigureAwait(false);
 
-            //        Console.WriteLine(JsonConvert.SerializeObject(
-            //        new
-            //        {
-            //            Body = payload,
-            //            message.Properties,
-            //            message.MessageId,
-            //            message.To,
-            //            message.CorrelationId
-            //        }, Newtonsoft.Json.Formatting.Indented));
-            //        return MessageAcknowledgement.Complete;
-            //    }).ConfigureAwait(false);
+            //await Task.Delay(20000);
+
+            //await deviceClient.DisposeAsync();
+
+            //await deviceClient.SetIncomingMessageCallbackAsync(null);
 
             await Task.Delay(-1);
         }

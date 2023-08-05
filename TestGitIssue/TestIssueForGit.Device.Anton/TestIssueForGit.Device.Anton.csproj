@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" Version="1.32.0" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.6.2" />
+    <PackageReference Include="MQTTnet" Version="4.1.4.563" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>

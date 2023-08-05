@@ -36,7 +36,7 @@ namespace TestIssueForGit.Backend.Anton
                         batch.EnqueuedOnUtc,
                         batch.Records
                     }, Formatting.Indented));
-                return Task.FromResult(AcknowledgementType.Complete);
+                return Task.FromResult(AcknowledgementType.Abandon);
             };
             await _serviceClient.MessageFeedback.OpenAsync(token);
         }

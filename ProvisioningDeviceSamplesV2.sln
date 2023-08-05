@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{CDBFA7D0-E
 		Libs\Microsoft.Azure.Devices.Provisioning.Client.dll = Libs\Microsoft.Azure.Devices.Provisioning.Client.dll
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIssueForGit.Device.Anton.V1", "TestGitIssue\TestIssueForGit.Device.Anton.V1\TestIssueForGit.Device.Anton.V1.csproj", "{28F355F9-B254-4AEF-93A6-A091FB6A62AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{359F915C-050F-4C3D-9242-5212531E4836}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{359F915C-050F-4C3D-9242-5212531E4836}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{359F915C-050F-4C3D-9242-5212531E4836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F355F9-B254-4AEF-93A6-A091FB6A62AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F355F9-B254-4AEF-93A6-A091FB6A62AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F355F9-B254-4AEF-93A6-A091FB6A62AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F355F9-B254-4AEF-93A6-A091FB6A62AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{2DC67B39-7C98-40CF-81E7-E9FED766D67D} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
 		{1B00ECF5-36F6-48B3-A541-042C2618CB23} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
 		{359F915C-050F-4C3D-9242-5212531E4836} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
+		{28F355F9-B254-4AEF-93A6-A091FB6A62AE} = {6F2C8DB1-4F98-43D3-BAE7-0E7FECFC8FBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88111BA1-4E11-436B-B373-4D0205BDFEDA}
